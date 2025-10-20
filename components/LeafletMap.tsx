@@ -15,7 +15,7 @@ import type { Track } from "../lib/tracks";
 const defaultCenter: [number, number] = [25, 15];
 const defaultZoom = 2;
 
-const createMarkerIcon = (displayLabel: string, color: string) =>
+const createMarkerIcon = (displayLabel: string) =>
   L.divIcon({
     html: `<span style="
         display:flex;
@@ -24,8 +24,8 @@ const createMarkerIcon = (displayLabel: string, color: string) =>
         width:2.5rem;
         height:2.5rem;
         border-radius:0.8rem;
-        background:${color};
-        color:#0f172a;
+        background:#0f172a;
+        color:#ffffff;
         font-weight:700;
         font-size:0.9rem;
         box-shadow:0 10px 25px rgba(15,23,42,0.25);
@@ -71,7 +71,7 @@ export default function LeafletMap({
   const markerIcons = useMemo(
     () =>
       tracks.map((track, index) =>
-        createMarkerIcon(`#${index + 1}`, track.accentColor)
+        createMarkerIcon(`#${index + 1}`)
       ),
     [tracks]
   );
