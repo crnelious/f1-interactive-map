@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import dynamic from "next/dynamic";
-
 import { tracks } from "../lib/tracks";
 
 const toolActions = [
@@ -16,7 +15,7 @@ const LeafletMap = dynamic(() => import("../components/LeafletMap"), {
   ssr: false,
   loading: () => (
     <div className="flex h-full w-full items-center justify-center bg-slate-200 text-sm text-slate-500">
-      Loading map...
+      Loading map…
     </div>
   )
 });
