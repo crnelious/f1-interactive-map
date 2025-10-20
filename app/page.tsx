@@ -39,7 +39,7 @@ export default function Page() {
         <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-white via-white/95 to-slate-100/90" />
         <div className="pointer-events-none absolute inset-y-6 right-3 w-1 -z-10 rounded-lg bg-slate-200/80 shadow-[inset_0_0_4px_rgba(148,163,184,0.28)]" />
 
-        <div className="absolute -left-14 top-1/2 z-10 hidden -translate-y-1/2 flex-col items-center gap-3 rounded-2xl border border-white/60 bg-white/90 p-3 text-slate-500 shadow-[0_20px_45px_rgba(15,23,42,0.18)] sm:flex lg:-left-16 lg:gap-4">
+        <div className="absolute -left-14 top-1/2 z-10 hidden np-translate-y-1/2 flex-col items-center gap-3 rounded-2xl border border-white/60 bg-white/90 p-3 text-slate-500 shadow-[0_20px_45px_rgba(15,23,42,0.18)] sm:flex lg:-left-16 lg:gap-4">
           {toolActions.map((tool) => (
             <button
               key={tool.label}
