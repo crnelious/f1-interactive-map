@@ -107,19 +107,29 @@ export default function LeafletMap({
           }}
         >
           <Popup>
-            <div className="space-y-1">
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
-                #{index + 1} Favourite
-              </p>
-              <h2 className="text-base font-semibold text-slate-900">
-                {track.title}
-              </h2>
-              <p className="text-xs font-medium text-slate-500">
-                {track.location}
-              </p>
-              <p className="text-sm leading-snug text-slate-600">
-                {track.description}
-              </p>
+            <div className="w-56 space-y-2">
+              <div className="h-28 w-full overflow-hidden rounded-lg">
+                <img
+                  src={track.image}
+                  alt={`${track.title} overview`}
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <div className="space-y-1">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-slate-400">
+                  #{index + 1} Favourite
+                </p>
+                <h2 className="text-sm font-semibold text-slate-900">
+                  {track.title}
+                </h2>
+                <p className="text-xs font-medium text-slate-500">
+                  {track.location}
+                </p>
+                <p className="text-xs leading-snug text-slate-600">
+                  {track.description}
+                </p>
+              </div>
             </div>
           </Popup>
         </Marker>
