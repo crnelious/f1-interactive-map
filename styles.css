@@ -117,19 +117,23 @@ button {
   gap: 0.75rem;
 }
 
-/* Mini badge styled to mimic an F1 logo. */
+/* Mini badge that holds the F1 logo asset. */
 .panel__brand {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 3rem;
-  height: 3rem;
+  width: 3.2rem;
+  height: 3.2rem;
   border-radius: 0.9rem;
-  background: #0f172a;
-  color: #ffffff;
-  font-weight: 700;
-  letter-spacing: 0.3em;
-  font-size: 1rem;
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.16);
+  padding: 0.35rem;
+}
+
+.panel__brand img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* Small uppercase label above the main title. */
@@ -186,7 +190,7 @@ button {
 .track-card {
   position: relative;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 5rem 1fr;
   gap: 0.9rem;
   padding: 1rem;
   border-radius: 0.9rem;
@@ -205,18 +209,55 @@ button {
   background: rgba(226, 232, 240, 0.95);
 }
 
+.track-card__media {
+  position: relative;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 0.85rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #cbd5f5, #e2e8f0);
+}
+
+.track-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.track-card__image--placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(148, 163, 184, 0.4), rgba(226, 232, 240, 0.7));
+  opacity: 0.7;
+}
+
+.track-card__body {
+  display: flex;
+  flex-direction: column;
+}
+
 /* Square badge that usually shows the track number or initials. */
 .track-card__badge {
+  position: absolute;
+  bottom: 0.35rem;
+  left: 0.35rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 4rem;
-  height: 4rem;
-  border-radius: 0.8rem;
+  min-width: 2.1rem;
+  height: 2.1rem;
+  padding: 0 0.4rem;
+  border-radius: 0.65rem;
   background: #0f172a;
   color: #ffffff;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.25);
 }
 
 /* Track name styling. */
@@ -261,14 +302,29 @@ button {
   width: 14rem;
 }
 
-/* Decorative block that stands in for future thumbnail images. */
+.popup__media {
+  width: 100%;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  margin-bottom: 0.6rem;
+}
+
+.popup__image,
 .popup__placeholder {
   width: 100%;
   aspect-ratio: 16 / 10;
+  display: block;
   border-radius: 0.75rem;
-  margin-bottom: 0.6rem;
+}
+
+/* Decorative block that stands in for future thumbnail images. */
+.popup__placeholder {
   background: linear-gradient(135deg, #cbd5f5, #e2e8f0);
   opacity: 0.75;
+}
+
+.popup__image {
+  object-fit: cover;
 }
 
 /* Tiny uppercase label inside the popup. */
@@ -300,6 +356,18 @@ button {
 .popup__description {
   margin-top: 0.35rem;
   line-height: 1.35;
+}
+
+.marker-icon {
+  background: transparent !important;
+  border: none !important;
+  filter: drop-shadow(0 10px 18px rgba(15, 23, 42, 0.28));
+}
+
+.marker-icon--flag .marker-icon__image {
+  width: 2.6rem;
+  height: auto;
+  display: block;
 }
 
 /* On phones, let the panel fill the screen and scroll naturally. */

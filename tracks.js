@@ -1,6 +1,6 @@
 // Wrap everything in an IIFE so our variables stay private and don't clutter the global scope.
 (function () {
-  // Our list of favourite circuits; each object powers the sidebar card and the map marker.
+  // Our list of favorite circuits; each object powers the sidebar card and the map marker.
   const tracks = [
     {
       id: "monaco",
@@ -8,7 +8,8 @@
       location: "Monte Carlo, Monaco",
       description:
         "The legendary street circuit winding through the harbour, packed with tight corners and glamour.",
-      image: null,
+      image: "./assets/tracks/Monte_Carlo_Formula_1_track_map.png",
+      imageAlt: "Track layout of Circuit de Monaco",
       coords: [43.7347, 7.4206]
     },
     {
@@ -17,7 +18,8 @@
       location: "Silverstone, United Kingdom",
       description:
         "The birthplace of Formula 1 and the long-time home of the British Grand Prix.",
-      image: null,
+      image: "./assets/tracks/Silverstone_Circuit_2020.png",
+      imageAlt: "Track layout of Silverstone Circuit",
       coords: [52.0733, -1.014]
     },
     {
@@ -26,7 +28,8 @@
       location: "Monza, Italy",
       description:
         'Known as "The Temple of Speed", the fastest track on the calendar and host of the Italian Grand Prix.',
-      image: null,
+      image: "./assets/tracks/Monza-Circuit.png",
+      imageAlt: "Track layout of Autodromo Nazionale Monza",
       coords: [45.6156, 9.2811]
     },
     {
@@ -35,7 +38,8 @@
       location: "Suzuka, Japan",
       description:
         "The only figure-eight circuit in F1, famous for the Esses and the 130R corner.",
-      image: null,
+      image: "./assets/tracks/suzuka.png",
+      imageAlt: "Track layout of Suzuka International Racing Course",
       coords: [34.8431, 136.541]
     },
     {
@@ -44,7 +48,8 @@
       location: "Montréal, Canada",
       description:
         'A mix of long straights and tight chicanes on Île Notre-Dame, home of the "Wall of Champions".',
-      image: null,
+      image: "./assets/tracks/Gilles-Villeneuve-circuit-2018.jpg",
+      imageAlt: "Track layout of Circuit Gilles-Villeneuve",
       coords: [45.5014, -73.5229]
     },
     {
@@ -53,7 +58,8 @@
       location: "Austin, United States",
       description:
         "A modern US track with huge elevation changes and a steep climb into turn one.",
-      image: null,
+      image: "./assets/tracks/Austin_circuit.png",
+      imageAlt: "Track layout of Circuit of the Americas",
       coords: [30.1328, -97.6411]
     },
     {
@@ -62,7 +68,8 @@
       location: "Spielberg, Austria",
       description:
         "Fast straights, sharp inclines, and alpine backdrops in the Styrian hills.",
-      image: null,
+      image: "./assets/tracks/Austria_Circuit.avif",
+      imageAlt: "Track layout of Red Bull Ring",
       coords: [47.2196, 14.7646]
     },
     {
@@ -71,7 +78,8 @@
       location: "Zandvoort, Netherlands",
       description:
         "Recently reintroduced with steep banking and seaside winds near Amsterdam.",
-      image: null,
+      image: "./assets/tracks/Zandvoort_Circuit.png",
+      imageAlt: "Track layout of Circuit Zandvoort",
       coords: [52.388, 4.5409]
     },
     {
@@ -80,7 +88,8 @@
       location: "Sakhir, Bahrain",
       description:
         "A desert venue under floodlights that regularly opens the season with dramatic racing.",
-      image: null,
+      image: "./assets/tracks/Bahrain_International_Circuit--Grand_Prix_Layout.png",
+      imageAlt: "Track layout of Bahrain International Circuit",
       coords: [26.0325, 50.5106]
     },
     {
@@ -89,7 +98,8 @@
       location: "Singapore",
       description:
         "The first ever night race, carving through downtown Singapore with dozens of corners.",
-      image: null,
+      image: "./assets/tracks/Singapore_Circuit.avif",
+      imageAlt: "Track layout of Marina Bay Street Circuit",
       coords: [1.2914, 103.8644]
     },
     {
@@ -98,7 +108,8 @@
       location: "Las Vegas, United States",
       description:
         "A neon-soaked sprint down the Strip featuring long straights and late-night racing.",
-      image: null,
+      image: "./assets/tracks/2023_Las_Vegas_street_circuit.svg",
+      imageAlt: "Track layout of the Las Vegas Street Circuit",
       coords: [36.1206, -115.1746]
     },
     {
@@ -107,7 +118,8 @@
       location: "Lusail, Qatar",
       description:
         "A smooth, sweeping layout in the Middle East that shines under the lights.",
-      image: null,
+      image: "./assets/tracks/Lusail_International_Circuit_2023.png",
+      imageAlt: "Track layout of Lusail International Circuit",
       coords: [25.4889, 51.4542]
     }
   ];
@@ -116,6 +128,17 @@
   const DEFAULT_CENTER = [25, 15];
   const DEFAULT_ZOOM = 2;
   const FLY_TO_ZOOM = 14;
+
+  // Path to the dedicated checkered flag icon used for map markers.
+  const MARKER_FLAG_SRC = "./assets/icons/noun-checkered-flag-38704.svg";
+  const DEFAULT_FLAG_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 44"><path fill="#15213b" d="M9 6a2 2 0 0 1 2-2h18a2 2 0 0 1 2 2v20a2 2 0 0 1-2 2H20l-4 4v-4h-5a2 2 0 0 1-2-2z"/><path fill="#fff" d="M11 8h4v4h-4zm4 0h4v4h-4zm4 0h4v4h-4zm4 0h4v4h-4zM11 12h4v4h-4zm4 0h4v4h-4zm4 0h4v4h-4zm4 0h4v4h-4zM11 16h4v4h-4zm4 0h4v4h-4zm4 0h4v4h-4zm4 0h4v4h-4zM11 20h4v4h-4zm4 0h4v4h-4zm4 0h4v4h-4zm4 0h4v4h-4z"/></svg>`;
+  const DEFAULT_FLAG_DATA_URL = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(
+    DEFAULT_FLAG_SVG
+  )}`;
+
+  function getFlagIconSource() {
+    return MARKER_FLAG_SRC || DEFAULT_FLAG_DATA_URL;
+  }
 
   // Leaflet loads from a CDN; if it fails we bail out gracefully.
   if (typeof L === "undefined") {
@@ -167,27 +190,16 @@
     loadingElement?.classList.add("is-hidden");
   });
 
-  // Custom marker that shows a badge number instead of the default pin icon.
-  function createMarkerIcon(label) {
+  // Custom marker that uses the dedicated checkered flag artwork.
+  function createMarkerIcon() {
     return L.divIcon({
-      html: `<span style="
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          width:2.5rem;
-          height:2.5rem;
-          border-radius:0.8rem;
-          background:#0f172a;
-          color:#ffffff;
-          font-weight:700;
-          font-size:0.9rem;
-          box-shadow:0 10px 25px rgba(15,23,42,0.25);
-          border:2px solid rgba(255,255,255,0.9);
-        ">${label}</span>`,
-      className: "marker-icon",
-      iconSize: [40, 40],
-      iconAnchor: [20, 20],
-      popupAnchor: [0, -20]
+      html: `
+        <img class="marker-icon__image" src="${getFlagIconSource()}" alt="" aria-hidden="true" />
+      `,
+      className: "marker-icon marker-icon--flag",
+      iconSize: [44, 44],
+      iconAnchor: [22, 40],
+      popupAnchor: [0, -36]
     });
   }
 
@@ -213,13 +225,22 @@
         card.classList.add("active");
       }
 
+      const mediaMarkup = track.image
+        ? `<img class="track-card__image" src="${track.image}" alt="${
+            track.imageAlt ?? `${track.title} circuit aerial view`
+          }" loading="lazy" />`
+        : `<div class="track-card__image track-card__image--placeholder" aria-hidden="true"></div>`;
+
       card.innerHTML = `
-        <span class="track-card__badge">#${index + 1}</span>
-        <span>
+        <div class="track-card__media">
+          ${mediaMarkup}
+          <span class="track-card__badge">#${index + 1}</span>
+        </div>
+        <div class="track-card__body">
           <h2 class="track-card__title">${track.title}</h2>
           <p class="track-card__meta">${track.location.toUpperCase()}</p>
           <p class="track-card__description">${track.description}</p>
-        </span>
+        </div>
       `;
 
       // Clicking a card should jump the map to the matching track.
@@ -236,9 +257,15 @@
   function createPopupContent(track, index) {
     const container = document.createElement("div");
     container.className = "popup";
+    const imageMarkup = track.image
+      ? `<img class="popup__image" src="${track.image}" alt="${
+          track.imageAlt ?? `${track.title} circuit aerial view`
+        }" loading="lazy" />`
+      : `<div class="popup__placeholder" aria-hidden="true"></div>`;
+
     container.innerHTML = `
-      <div class="popup__placeholder" aria-hidden="true"></div>
-      <p class="popup__eyebrow">#${index + 1} Favourite</p>
+      <div class="popup__media">${imageMarkup}</div>
+      <p class="popup__eyebrow">#${index + 1} Favorite</p>
       <h2 class="popup__title">${track.title}</h2>
       <p class="popup__meta">${track.location}</p>
       <p class="popup__description">${track.description}</p>
@@ -251,7 +278,7 @@
     tracks.forEach((track, index) => {
       // Create a Leaflet marker at the track's latitude and longitude.
       const marker = L.marker(track.coords, {
-        icon: createMarkerIcon(`#${index + 1}`)
+        icon: createMarkerIcon()
       });
 
       marker.addTo(map);
