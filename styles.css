@@ -52,6 +52,40 @@ button {
   font-size: 0.875rem;
 }
 
+.map-credit {
+  position: fixed;
+  right: clamp(1rem, 2vw, 2rem);
+  bottom: clamp(1.25rem, 3vw, 2.75rem);
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: #0f172a;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
+  backdrop-filter: blur(4px);
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.map-credit:hover,
+.map-credit:focus-visible {
+  background: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 15px 28px rgba(15, 23, 42, 0.24);
+}
+
+.map-credit:focus-visible {
+  outline: 2px solid #e2e8f0;
+  outline-offset: 3px;
+}
+
 /* Friendly overlay shown while map tiles are loading. */
 .map__loading {
   position: absolute;
