@@ -1,4 +1,6 @@
+// Wrap everything in an IIFE so our variables stay private and don't clutter the global scope.
 (function () {
+  // Our list of favourite circuits; each object powers the sidebar card and the map marker.
   const tracks = [
     {
       id: "monaco",
@@ -110,24 +112,29 @@
     }
   ];
 
+  // Starter settings for the map so it shows a world view before anything is selected.
   const DEFAULT_CENTER = [25, 15];
   const DEFAULT_ZOOM = 2;
   const FLY_TO_ZOOM = 14;
 
+  // Leaflet loads from a CDN; if it fails we bail out gracefully.
   if (typeof L === "undefined") {
     console.error("Leaflet failed to load.");
     return;
   }
 
+  // Grab the key pieces of the page that this script needs to work with.
   const mapElement = document.getElementById("map");
   const loadingElement = document.getElementById("map-loading");
   const listElement = document.getElementById("track-list");
 
+  // If the HTML is missing the map or list containers, let the developer know and stop.
   if (!mapElement || !listElement) {
     console.error("Map container or track list element is missing.");
     return;
   }
 
+  // Build the Leaflet map with some gentle limits so it behaves nicely.
   const map = L.map(mapElement, {
     center: DEFAULT_CENTER,
     zoom: DEFAULT_ZOOM,
@@ -137,11 +144,13 @@
     scrollWheelZoom: false
   });
 
+  // Once the map tiles are ready, hide the loading message and fix any sizing hiccups.
   map.whenReady(() => {
     loadingElement?.classList.add("is-hidden");
     map.invalidateSize();
   });
 
+  // Pull in the OpenStreetMap background tiles that give our map its look.
   const tileLayer = L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
@@ -150,12 +159,15 @@
     }
   );
 
+  // Attach the tiles to the map so they actually appear on screen.
   tileLayer.addTo(map);
 
+  // Tile layers can finish loading at different times, so we hide the spinner again here.
   tileLayer.on("load", () => {
     loadingElement?.classList.add("is-hidden");
   });
 
+  // Custom marker that shows a badge number instead of the default pin icon.
   function createMarkerIcon(label) {
     return L.divIcon({
       html: `<span style="
@@ -179,13 +191,18 @@
     });
   }
 
+  // Keep track of every Leaflet marker so we can open and close popups later.
   const markers = new Map();
+  // Store whichever track the user last clicked so we can highlight it.
   let activeTrackId = tracks[0]?.id ?? null;
 
+  // Build the sidebar list from scratch, one button per track.
   function renderTrackList() {
+    // Clear any existing cards before we rebuild the list.
     listElement.innerHTML = "";
 
     tracks.forEach((track, index) => {
+      // Create a button element so the entry is both clickable and keyboard friendly.
       const card = document.createElement("button");
       card.type = "button";
       card.className = "track-card";
@@ -205,14 +222,17 @@
         </span>
       `;
 
+      // Clicking a card should jump the map to the matching track.
       card.addEventListener("click", () => {
         setActiveTrack(track.id, { fly: true, source: "list" });
       });
 
+      // Drop the finished card into the document.
       listElement.appendChild(card);
     });
   }
 
+  // Leaflet expects DOM nodes for popup content, so we generate one here.
   function createPopupContent(track, index) {
     const container = document.createElement("div");
     container.className = "popup";
@@ -226,8 +246,10 @@
     return container;
   }
 
+  // Place a marker for every track and wire up the click behaviour.
   function addMarkers() {
     tracks.forEach((track, index) => {
+      // Create a Leaflet marker at the track's latitude and longitude.
       const marker = L.marker(track.coords, {
         icon: createMarkerIcon(`#${index + 1}`)
       });
@@ -235,14 +257,17 @@
       marker.addTo(map);
       marker.bindPopup(createPopupContent(track, index));
 
+      // Keep the list and map in sync when someone clicks a marker.
       marker.on("click", () => {
         setActiveTrack(track.id, { fly: true, source: "marker" });
       });
 
+      // Remember the marker so we can reference it later.
       markers.set(track.id, marker);
     });
   }
 
+  // Update the list so only the current track appears highlighted.
   function highlightActiveCard() {
     const cards = listElement.querySelectorAll(".track-card");
     cards.forEach((card) => {
@@ -250,23 +275,28 @@
     });
   }
 
+  // Central helper that keeps the map, markers, and list pointing at the same track.
   function setActiveTrack(nextId, options = {}) {
     if (!nextId) return;
 
+    // Remember what was active so we can decide whether to animate.
     const previousId = activeTrackId;
     activeTrackId = nextId;
     highlightActiveCard();
 
+    // Find the full track data for the new selection.
     const track = tracks.find((item) => item.id === activeTrackId);
     if (!track) return;
 
     if (options.fly && activeTrackId !== previousId) {
+      // Smoothly zoom toward the track so it feels like we flew across the map.
       map.flyTo(track.coords, FLY_TO_ZOOM, {
         duration: 1.25,
         easeLinearity: 0.25
       });
     }
 
+    // If we already have a marker stored for this track, make sure its popup matches the UI.
     const marker = markers.get(activeTrackId);
     if (marker) {
       if (options.source === "list" || options.source === "marker") {
@@ -275,15 +305,19 @@
     }
   }
 
+  // Kick off the page by creating the list and the map markers.
   renderTrackList();
   addMarkers();
   highlightActiveCard();
 
+  // If we already picked a starting track, sync everything without flying the map.
   if (activeTrackId) {
     setActiveTrack(activeTrackId, { fly: false });
   }
 
+  // When the window resizes, ask Leaflet to recalc the map layout so tiles don't glitch.
   window.addEventListener("resize", () => {
+    // Wait a frame so the browser can finish layout adjustments first.
     window.requestAnimationFrame(() => {
       map.invalidateSize();
     });

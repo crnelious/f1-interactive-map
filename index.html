@@ -1,37 +1,50 @@
 <!DOCTYPE html>
+<!-- This tells the browser to use the modern HTML5 standard so everything works as expected. -->
 <html lang="en">
   <head>
+    <!-- The head stores page settings, text descriptions, and links to styles or fonts. -->
     <meta charset="utf-8" />
+    <!-- This keeps the layout readable on phones by matching the page width to the device screen. -->
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
     <title>Formula 1 Interactive Map</title>
+    <!-- Search engines use this short description to understand the page content. -->
     <meta
       name="description"
       content="Explore favourite Formula 1 circuits around the world."
     />
+    <!-- These two links set up a fast connection to Google Fonts before we actually request the font file. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- This pulls in the Inter font family so the text matches our design. -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <!-- Leaflet is the open-source map library we use, and this line loads its default styles. -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       crossorigin=""
     />
+    <!-- Our own stylesheet comes last so we can customize and override any default styles above. -->
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <!-- Everything inside main is the heart of the page: the map on the left and the info panel on the right. -->
     <main class="page">
+      <!-- This div is where Leaflet draws the interactive map. -->
       <div id="map" class="map" aria-label="Formula 1 circuits map">
+        <!-- While the map files load, this friendly message is shown to the user. -->
         <div class="map__loading" id="map-loading">Loading map…</div>
       </div>
 
+      <!-- The aside holds extra details next to the map, like a mini information board. -->
       <aside class="panel" aria-label="Favourite tracks">
         <div class="panel__content">
+          <!-- This header shows the little F1 badge and the title for the list of tracks. -->
           <header class="panel__header">
             <span class="panel__brand">F1</span>
             <div>
@@ -40,24 +53,30 @@
             </div>
           </header>
 
+          <!-- This section groups the title, description, and the actual list of track cards. -->
           <section class="panel__list">
             <header>
+              <!-- h1 is the main heading for this whole page, helping both readers and screen readers. -->
               <h1>Top Formula 1 Circuits</h1>
+              <!-- A quick description sets the stage for what the list is about. -->
               <p>
                 A personal top list of tracks I love watching, each one ready to
                 explore on the map.
               </p>
             </header>
+            <!-- JavaScript fills this empty div with track details once the page loads. -->
             <div id="track-list" class="track-list" role="list"></div>
           </section>
         </div>
       </aside>
     </main>
 
+    <!-- These scripts load after the HTML so the page shows up quickly before the code runs. -->
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
       crossorigin=""
     ></script>
+    <!-- Our own JavaScript adds the map markers and fills the track list with data. -->
     <script src="./tracks.js" defer></script>
   </body>
 </html>

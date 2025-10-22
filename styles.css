@@ -1,3 +1,4 @@
+/* High-level defaults for the whole page: fonts, colors, and base line height. */
 :root {
   color-scheme: light;
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -7,22 +8,26 @@
   line-height: 1.5;
 }
 
+/* Ensure padding and borders stay inside each element's box. */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
+/* Strip default margins and give the body a full-height canvas. */
 body {
   margin: 0;
   min-height: 100vh;
 }
 
+/* Buttons should feel like part of the text, so reuse the same font and color. */
 button {
   font: inherit;
   color: inherit;
 }
 
+/* Main wrapper that holds the map and the side panel. */
 .page {
   position: relative;
   display: grid;
@@ -31,6 +36,7 @@ button {
   background: #e2e8f0;
 }
 
+/* Container where the Leaflet map takes over the full viewport. */
 .map {
   position: fixed;
   inset: 0;
@@ -39,12 +45,14 @@ button {
   height: 100vh;
 }
 
+/* Let the Leaflet map fill its parent without overflowing. */
 .map .leaflet-container {
   width: 100%;
   height: 100%;
   font-size: 0.875rem;
 }
 
+/* Friendly overlay shown while map tiles are loading. */
 .map__loading {
   position: absolute;
   inset: 0;
@@ -58,12 +66,14 @@ button {
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
+/* Hide the loading overlay smoothly once the map is ready. */
 .map__loading.is-hidden {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
 
+/* Side panel that floats above the map with track details. */
 .panel {
   position: absolute;
   top: clamp(1.5rem, 3vw, 3rem);
@@ -82,12 +92,14 @@ button {
   overflow: hidden;
 }
 
+/* On larger screens, push the panel a little further from the edge. */
 @media (min-width: 640px) {
   .panel {
     margin-left: clamp(2.5rem, 4vw, 4rem);
   }
 }
 
+/* Stack everything inside the panel with even spacing. */
 .panel__content {
   display: flex;
   flex: 1 1 auto;
@@ -98,12 +110,14 @@ button {
   gap: 1.75rem;
 }
 
+/* Align the logo block and text heading side by side. */
 .panel__header {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
 
+/* Mini badge styled to mimic an F1 logo. */
 .panel__brand {
   display: inline-flex;
   align-items: center;
@@ -118,6 +132,7 @@ button {
   font-size: 1rem;
 }
 
+/* Small uppercase label above the main title. */
 .panel__eyebrow {
   margin: 0;
   font-size: 0.75rem;
@@ -126,12 +141,14 @@ button {
   color: #94a3b8;
 }
 
+/* Main heading for the sidebar content. */
 .panel__title {
   margin: 0.15rem 0 0;
   font-size: 1.375rem;
   font-weight: 600;
 }
 
+/* Scrollable area that holds the list of track cards. */
 .panel__list {
   display: flex;
   flex: 1 1 0;
@@ -143,6 +160,7 @@ button {
   padding-bottom: 0.5rem;
 }
 
+/* Large title inside the list section. */
 .panel__list header h1 {
   margin: 0;
   font-size: 1.6rem;
@@ -150,18 +168,21 @@ button {
   color: #0f172a;
 }
 
+/* Quick summary that introduces the track list. */
 .panel__list header p {
   margin: 0.35rem 0 0;
   font-size: 0.95rem;
   color: #64748b;
 }
 
+/* Flex container so cards stack neatly with even spacing. */
 .track-list {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
 }
 
+/* Individual card for each track, designed like a clickable tile. */
 .track-card {
   position: relative;
   display: grid;
@@ -178,11 +199,13 @@ button {
     border-color 0.18s ease, background 0.18s ease;
 }
 
+/* Small hover lift to make the card feel interactive. */
 .track-card:hover {
   transform: translateY(-1px);
   background: rgba(226, 232, 240, 0.95);
 }
 
+/* Square badge that usually shows the track number or initials. */
 .track-card__badge {
   display: inline-flex;
   align-items: center;
@@ -196,6 +219,7 @@ button {
   font-weight: 600;
 }
 
+/* Track name styling. */
 .track-card__title {
   margin: 0;
   font-size: 1rem;
@@ -203,6 +227,7 @@ button {
   color: #0f172a;
 }
 
+/* Extra info like country and year in a tiny uppercase style. */
 .track-card__meta {
   margin: 0.35rem 0;
   font-size: 0.68rem;
@@ -211,6 +236,7 @@ button {
   color: #94a3b8;
 }
 
+/* Brief description underneath the track name. */
 .track-card__description {
   margin: 0;
   font-size: 0.85rem;
@@ -218,20 +244,24 @@ button {
   line-height: 1.35;
 }
 
+/* Active state when a card is matched with the selected map marker. */
 .track-card.active {
   border-color: rgba(100, 116, 139, 0.9);
   background: rgba(226, 232, 240, 0.95);
 }
 
+/* Keyboard focus outline so cards stay accessible without a mouse. */
 .track-card:focus-visible {
   outline: 2px solid #94a3b8;
   outline-offset: 3px;
 }
 
+/* Styles for the popups that appear when you click a map marker. */
 .popup {
   width: 14rem;
 }
 
+/* Decorative block that stands in for future thumbnail images. */
 .popup__placeholder {
   width: 100%;
   aspect-ratio: 16 / 10;
@@ -241,6 +271,7 @@ button {
   opacity: 0.75;
 }
 
+/* Tiny uppercase label inside the popup. */
 .popup__eyebrow {
   margin: 0;
   font-size: 0.6rem;
@@ -249,6 +280,7 @@ button {
   color: #94a3b8;
 }
 
+/* Popup headline with the track name. */
 .popup__title {
   margin: 0.35rem 0 0.25rem;
   font-size: 0.95rem;
@@ -256,6 +288,7 @@ button {
   color: #0f172a;
 }
 
+/* Shared styles for the extra popup details and the description text. */
 .popup__meta,
 .popup__description {
   margin: 0;
@@ -263,11 +296,13 @@ button {
   color: #475569;
 }
 
+/* Slight spacing above the body text inside the popup. */
 .popup__description {
   margin-top: 0.35rem;
   line-height: 1.35;
 }
 
+/* On phones, let the panel fill the screen and scroll naturally. */
 @media (max-width: 720px) {
   .panel {
     top: 1.25rem;
