@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Formula 1 Interactive Map</title>
+    <meta
+      name="description"
+      content="Explore favourite Formula 1 circuits around the world."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <div id="map" class="map" aria-label="Formula 1 circuits map">
+        <div class="map__loading" id="map-loading">Loading map…</div>
+      </div>
+
+      <aside class="panel" aria-label="Favourite tracks">
+        <div class="panel__content">
+          <header class="panel__header">
+            <span class="panel__brand">F1</span>
+            <div>
+              <p class="panel__eyebrow">Top Circuits</p>
+              <p class="panel__title">Favourite Tracks</p>
+            </div>
+          </header>
+
+          <section class="panel__list">
+            <header>
+              <h1>Top Formula 1 Circuits</h1>
+              <p>
+                A personal top list of tracks I love watching, each one ready to
+                explore on the map.
+              </p>
+            </header>
+            <div id="track-list" class="track-list" role="list"></div>
+          </section>
+        </div>
+      </aside>
+    </main>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      crossorigin=""
+    ></script>
+    <script src="./tracks.js" defer></script>
+  </body>
+</html>
